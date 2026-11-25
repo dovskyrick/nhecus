@@ -8,7 +8,7 @@ service cloud.firestore {
     function isAdmin() {
       return request.auth != null
         && request.auth.uid in [
-          'REPLACE-WITH-ADMIN-UID'
+          'UfkvoyJj9Qco6RLQ6Tu0hcw9Ywi2'  // admin (email + password, nhecus back-office)
         ];
     }
 

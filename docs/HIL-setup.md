@@ -14,10 +14,10 @@ Project settings → General → Your apps → Web (</>). Name it "nhecus-web" a
 ## 4. [ ] Create Firestore and Storage
 Build → Firestore Database → Create, in production mode, region europe-west1 (Belgium). Then Build → Storage → Get started, same region. In Billing, set a budget alert around five euros for peace of mind.
 
-## 5. [ ] Enable the admin login
+## 5. [x] Enable the admin login
 Authentication → Sign-in method → Email/Password → Enable, leaving passwordless off. Then Users → Add user with your email and a strong password from a password manager. Never write the email into this repo.
 
-## 6. [ ] Send Claude your UID
+## 6. [x] Send Claude your UID
 Authentication → Users → copy the long User UID of your own account. Claude replaces REPLACE-WITH-ADMIN-UID in firestore.rules and storage.rules. UIDs are only identifiers, so they are safe inside this public repository, unlike emails.
 
 ## 7. [ ] Publish the security rules
