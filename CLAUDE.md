@@ -25,4 +25,4 @@ Vite + React + TypeScript + Firebase, hash routing, back-office at `/admin/`.
 - Buying/requests: “Enquire about this piece” → modal (`components/Enquire.tsx`) with the email as copyable
   text (deliberately no mailto: links) + an Instagram DM link. No checkout, no forms.
 - Deploy: GitHub Pages via `.github/workflows/deploy-pages.yml` → https://dovskyrick.github.io/nhecus/
-- Human-in-the-loop setup steps: `docs/HIL-setup.md`.
+- Human-in-the-loop setup steps: `docs/HIL-setup.md`; custom domain: `docs/HIL-custom-domain.md`.
