@@ -36,7 +36,8 @@ export interface AboutContent {
   story: string;           // paragraphs separated by blank lines; last one is the closing line
   imageUrl: string;
   imagePath?: string;
-  instagram?: string;      // handle for the "Ask on Instagram" DM buttons (set in the back-office)
+  instagram?: string;      // Instagram handle, shown in the enquiry modal (set in the back-office)
+  email?: string;          // contact email, shown as copyable text (never a mailto: link)
 }
 
 export const LOOSE_ID = 'loose';

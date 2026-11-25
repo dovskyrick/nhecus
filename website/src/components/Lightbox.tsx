@@ -1,8 +1,8 @@
-import { useEffect, type CSSProperties } from 'react';
+import { useEffect, useState, type CSSProperties } from 'react';
 import { ORIGINAL_LABEL, price, size, thumbOf, type Collection, type Drawing } from '../lib/types';
 import { href } from '../lib/route';
 import { Availability } from './DrawingCard';
-import AskOnInstagram from './AskOnInstagram';
+import { EnquireButton, EnquireModal } from './Enquire';
 
 // Large view of one drawing, ← / → to walk through the current wall, Esc to close.
 export default function Lightbox({ list, index, collections, onIndex, onClose }: {
@@ -10,11 +10,13 @@ export default function Lightbox({ list, index, collections, onIndex, onClose }:
 }) {
   const d = list[index];
   const col = collections?.find(c => c.id === d.collectionId);
-  const go = (step: number) => { onIndex((index + step + list.length) % list.length); };
+  const [asking, setAsking] = useState(false);
+  const go = (step: number) => { setAsking(false); onIndex((index + step + list.length) % list.length); };
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
+      if (e.key === 'Escape') { if (asking) setAsking(false); else onClose(); }
+      if (asking) return;
       if ((e.target as HTMLElement)?.closest?.('input, textarea')) return;
       if (e.key === 'ArrowRight' && list.length > 1) go(1);
       if (e.key === 'ArrowLeft' && list.length > 1) go(-1);
@@ -52,7 +54,7 @@ export default function Lightbox({ list, index, collections, onIndex, onClose }:
             <li className={d.prints ? 'yes' : ''}>{d.prints ? 'Prints available on request' : 'No prints'}</li>
           </ul>
           {!(d.original === 'available' || d.prints) && <Availability d={d} />}
-          <AskOnInstagram d={d} />
+          <EnquireButton d={d} onOpen={() => setAsking(true)} />
           {list.length > 1 && (
             <div className="lightbox-nav">
               <button className="btn ghost" onClick={() => go(-1)} aria-label="Previous drawing">←</button>
@@ -61,6 +63,7 @@ export default function Lightbox({ list, index, collections, onIndex, onClose }:
           )}
         </div>
       </div>
+      {asking && <EnquireModal d={d} onClose={() => setAsking(false)} />}
     </div>
   );
 }

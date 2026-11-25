@@ -11,7 +11,8 @@ Sibling of the oil-painting site dovsky.com, built on the same architecture
 | **Library** | every drawing, organised in collections (Inktober, trips, studies…). One drawing = one collection. |
 | **About** | editable story + photo |
 
-Originals, prints and requests go through an **Instagram DM** — no checkout, no forms on the site.
+Originals, prints and requests: **Enquire about this piece** opens a short personal note with an email
+address to copy and an Instagram DM link — no checkout, no forms.
 
 ```
 .

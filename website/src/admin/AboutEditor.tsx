@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { fetchAbout } from '../lib/content';
 import { about as defaultAbout } from '../data/defaults';
 import type { AboutContent } from '../lib/types';
-import { cleanHandle } from '../lib/instagram';
+import { cleanEmail, cleanHandle } from '../lib/contact';
 import { errMsg, removeImage, saveAbout, uploadAboutImage } from './services';
 
 export default function AboutEditor() {
@@ -18,7 +18,9 @@ export default function AboutEditor() {
     try {
       const instagram = cleanHandle(about.instagram);
       if (about.instagram?.trim() && !instagram) { setMsg('That Instagram handle looks wrong — use just the name, e.g. nhecus.ink'); setBusy(false); return; }
-      let next: AboutContent = { story: about.story, imageUrl: about.imageUrl, instagram, ...(about.imagePath ? { imagePath: about.imagePath } : {}) };
+      const email = cleanEmail(about.email);
+      if (about.email?.trim() && !email) { setMsg('That email address looks wrong.'); setBusy(false); return; }
+      let next: AboutContent = { story: about.story, imageUrl: about.imageUrl, instagram, email, ...(about.imagePath ? { imagePath: about.imagePath } : {}) };
       if (file) {
         const old = about.imagePath;
         next = { ...next, ...(await uploadAboutImage(file)) };
@@ -47,7 +49,10 @@ export default function AboutEditor() {
           </label>
         </div>
         <div className="fields">
-          <label>Instagram handle — every “Ask on Instagram” button opens a DM to it
+          <label>Contact email — shown in the “Enquire” window as copyable text (not a mail link)
+            <input type="email" value={about.email ?? ''} placeholder="e.g. hello@nhecus.com" onChange={e => setAbout({ ...about, email: e.target.value })} />
+          </label>
+          <label>Instagram handle — offered in the same window for DMs
             <input value={about.instagram ?? ''} placeholder="e.g. nhecus.ink (no @)" onChange={e => setAbout({ ...about, instagram: e.target.value })} />
           </label>
           <label>Story (leave an empty line between paragraphs; the last one is the closing line)

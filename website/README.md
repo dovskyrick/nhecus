@@ -22,22 +22,22 @@ With an empty `src/lib/firebase-config.ts` the site runs in **demo mode** on the
   **featured** (in the Show), **original** (`available` | `sold` | `kept`), **prints** (bool), optional price,
   `aspect` + image URLs/paths.
 - `site/collections` — `{ items: Collection[] }`, ordered list (order = Library order).
-- `site/about` — story + photo + Instagram handle.
+- `site/about` — story + photo + contact email + Instagram handle.
 
 A drawing whose collection was deleted shows up under **Loose sheets** (Library) and *Unsorted* (back-office).
 
 ## Back-office (`/admin/`)
 Email + password (Firebase Auth). Sections: **Drawings** (add/edit, pick the collection, ★ toggle for the
-Show right in the list, filter by collection), **Collections** (add, rename, reorder, hide), **About & Instagram**.
+Show right in the list, filter by collection), **Collections** (add, rename, reorder, hide), **About & contact**.
 Editing needs the signed-in UID in `firestore.rules` **and** `storage.rules`.
 
-## Selling — Instagram DM only
+## Selling — enquiries by email or DM
 No checkout, no forms. Each drawing says whether the original is available/sold/kept and whether prints exist,
-with an **Ask on Instagram ↗** button: it opens `ig.me/m/<handle>` and copies a ready first message
-(“Hi! I saw “…” on nhecus.com and I'm interested in the original…”) for the visitor to paste.
-The handle is set in the back-office (**About & Instagram**, stored in `site/about`); the
-`VITE_INSTAGRAM_HANDLE` repository variable is only a fallback. Code: `src/lib/instagram.ts`,
-`src/components/AskOnInstagram.tsx`.
+with an **Enquire about this piece** button (sold/kept pieces: *Ask about something similar*). It opens a
+modal with a candid note: the contact **email** as copyable text (deliberately no `mailto:` link) and an
+**Instagram DM** link. Both are set in the back-office (**About & contact**, stored in `site/about`);
+`VITE_CONTACT_EMAIL` / `VITE_INSTAGRAM_HANDLE` build variables are only fallbacks.
+Code: `src/lib/contact.ts`, `src/components/Enquire.tsx`, `src/components/CopyText.tsx`.
 
 ## Theme
 **Paper** only — see `src/theme/README.md`. Earlier variations (Night wall, Zine) and the theme picker

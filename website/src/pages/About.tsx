@@ -1,5 +1,5 @@
 import SectionHead from '../components/SectionHead';
-import InstagramLink from '../components/InstagramLink';
+import ContactLine from '../components/ContactLine';
 import { useAbout } from '../lib/content';
 
 export default function About() {
@@ -12,7 +12,7 @@ export default function About() {
         {paras.map((p, i) => (
           <p key={i} className={i === paras.length - 1 && paras.length > 1 ? 'about-punch' : ''}>{p}</p>
         ))}
-        <p className="about-dm mono">Originals, prints &amp; requests → <InstagramLink fallback="Instagram DM (link coming soon)" /></p>
+        <ContactLine />
       </div>
       <figure className="about-photo">
         <span className="card-mat"><img src={about.imageUrl} alt="" /></span>

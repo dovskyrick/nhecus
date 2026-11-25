@@ -3,7 +3,6 @@ import Ticker from './components/Ticker';
 import Show from './pages/Show';
 import Library from './pages/Library';
 import About from './pages/About';
-import InstagramLink from './components/InstagramLink';
 import { useTheme } from './theme/useTheme';
 import { useRoute } from './lib/route';
 
@@ -23,7 +22,6 @@ export default function App() {
       </main>
       <footer className="footer">
         <span className="mono">nhecus © {new Date().getFullYear()}</span>
-        <InstagramLink className="mono" />
         <span className="mono">ink pen on paper · all drawings all rights reserved</span>
       </footer>
     </div>
