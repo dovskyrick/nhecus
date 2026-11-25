@@ -27,7 +27,7 @@ After Claude commits your UID, paste website/firestore.rules into Firestore → 
 Authentication → Settings → Authorized domains → Add domain: dovskyrick.github.io. Later also add nhecus.com. Otherwise the back-office login fails with an "unauthorized domain" error. Localhost should already be listed there by default, for testing.
 
 ## 9. [ ] Set your Instagram handle
-Back-office → About & Instagram → type your handle without the @, and save. Every drawing's "Ask on Instagram" button opens a DM to you and copies a ready first message for buyers to paste.
+Back-office → About & Instagram → type your handle without the @, and save. Every drawing's "Ask on Instagram" button opens a DM to you and copies a first message for buyers to paste.
 
 ## 10. [ ] Smoke-test the back-office
 Open dovskyrick.github.io/nhecus/admin, sign in, create collections, then add one drawing with a cropped photo. Star it for the Show. Reload the public site in a browser: your drawing appears and the "mock-up" badge disappears.
