@@ -22,20 +22,23 @@ With an empty `src/lib/firebase-config.ts` the site runs in **demo mode** on the
   **featured** (in the Show), **original** (`available` | `sold` | `kept`), **prints** (bool), optional price,
   `aspect` + image URLs/paths.
 - `site/collections` — `{ items: Collection[] }`, ordered list (order = Library order).
-- `site/about` — story + photo.
+- `site/about` — story + photo + Instagram handle.
 
 A drawing whose collection was deleted shows up under **Loose sheets** (Library) and *Unsorted* (back-office).
 
 ## Back-office (`/admin/`)
 Email + password (Firebase Auth). Sections: **Drawings** (add/edit, pick the collection, ★ toggle for the
-Show right in the list, filter by collection), **Collections** (add, rename, reorder, hide), **About**.
+Show right in the list, filter by collection), **Collections** (add, rename, reorder, hide), **About & Instagram**.
 Editing needs the signed-in UID in `firestore.rules` **and** `storage.rules`.
 
-## Selling
-No checkout. Each drawing says whether the original is available/sold/kept and whether prints exist;
-“Ask about it” sends a message via Formspree (if `VITE_FORMSPREE_ID` is set) and/or links an Instagram DM
-(`VITE_INSTAGRAM_HANDLE`). Both are GitHub repository **variables**, never committed.
+## Selling — Instagram DM only
+No checkout, no forms. Each drawing says whether the original is available/sold/kept and whether prints exist,
+with an **Ask on Instagram ↗** button: it opens `ig.me/m/<handle>` and copies a ready first message
+(“Hi! I saw “…” on nhecus.com and I'm interested in the original…”) for the visitor to paste.
+The handle is set in the back-office (**About & Instagram**, stored in `site/about`); the
+`VITE_INSTAGRAM_HANDLE` repository variable is only a fallback. Code: `src/lib/instagram.ts`,
+`src/components/AskOnInstagram.tsx`.
 
-## Themes
-See `src/theme/README.md`. Three themes — **Paper** (default), **Night wall**, **Zine** — with a temporary
-picker bottom-right. Hide the picker: `SHOW_THEME_MENU = false` in `src/App.tsx`.
+## Theme
+**Paper** only — see `src/theme/README.md`. Earlier variations (Night wall, Zine) and the theme picker
+are frozen in `src/theme/archive/` (excluded from the build; README there explains how to revive them).

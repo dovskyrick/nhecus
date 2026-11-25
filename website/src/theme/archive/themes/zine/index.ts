@@ -1,5 +1,5 @@
 import './theme.css';
-import type { ThemeDef } from '../../types';
+import type { ThemeDef } from '../../../types';
 
 export default {
   id: 'zine',

@@ -1,12 +1,10 @@
 // ─── Theme registry ──────────────────────────────────────────────────────────
-// One folder per theme in ./themes/<id>/ (index.ts = metadata, theme.css = look).
-// Order here = order in the picker. The picker itself is switched on/off in App.tsx
-// (SHOW_THEME_MENU). Once a favourite is chosen: make it DEFAULT_THEME and hide the picker.
+// The site uses ONE theme: Paper (themes/paper). No picker is shown.
+// Earlier experiments (Night wall, Zine, the drop-up picker) are frozen in ./archive/ —
+// not imported, not type-checked, not built. See archive/README.md to revive one.
 // ─────────────────────────────────────────────────────────────────────────────
 import paper from './themes/paper';
-import night from './themes/night';
-import zine from './themes/zine';
 import type { ThemeDef } from './types';
 
-export const THEMES: ThemeDef[] = [paper, night, zine];
+export const THEMES: ThemeDef[] = [paper];
 export const DEFAULT_THEME = paper.id;

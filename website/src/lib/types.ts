@@ -36,6 +36,7 @@ export interface AboutContent {
   story: string;           // paragraphs separated by blank lines; last one is the closing line
   imageUrl: string;
   imagePath?: string;
+  instagram?: string;      // handle for the "Ask on Instagram" DM buttons (set in the back-office)
 }
 
 export const LOOSE_ID = 'loose';

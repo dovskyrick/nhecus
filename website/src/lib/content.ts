@@ -85,11 +85,14 @@ export function useDrawings() {
 }
 
 // Static defaults render instantly; Firestore content replaces them when it arrives.
+// Each doc is fetched once per page view and shared by every component that uses it.
+const siteCache = new Map<() => Promise<unknown>, Promise<unknown>>();
 function useSiteDoc<T>(fallback: T, loader: () => Promise<T | null>) {
   const [data, setData] = useState<T>(fallback);
   useEffect(() => {
     let alive = true;
-    withTimeout(loader()).then(v => { if (alive && v) setData(v); }).catch(() => { /* keep defaults */ });
+    if (!siteCache.has(loader)) siteCache.set(loader, withTimeout(loader()).catch(() => { siteCache.delete(loader); return null; }));
+    (siteCache.get(loader) as Promise<T | null>).then(v => { if (alive && v) setData(v); }).catch(() => { /* keep defaults */ });
     return () => { alive = false; };
   }, []);
   return data;

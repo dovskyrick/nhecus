@@ -3,15 +3,12 @@ import Ticker from './components/Ticker';
 import Show from './pages/Show';
 import Library from './pages/Library';
 import About from './pages/About';
-import ThemeMenu from './theme/ThemeMenu';
+import InstagramLink from './components/InstagramLink';
 import { useTheme } from './theme/useTheme';
 import { useRoute } from './lib/route';
 
-// Temporary theme picker (bottom-right) while choosing a look. Set to false to hide it.
-const SHOW_THEME_MENU = true;
-
 export default function App() {
-  useTheme();
+  useTheme(); // Paper — the only theme (others are in src/theme/archive/)
   const route = useRoute();
   const key = route.tab === 'library' ? `library/${route.collection ?? ''}` : route.tab;
 
@@ -26,9 +23,9 @@ export default function App() {
       </main>
       <footer className="footer">
         <span className="mono">nhecus © {new Date().getFullYear()}</span>
+        <InstagramLink className="mono" />
         <span className="mono">ink pen on paper · all drawings all rights reserved</span>
       </footer>
-      {SHOW_THEME_MENU && <ThemeMenu />}
     </div>
   );
 }

@@ -187,6 +187,8 @@ h1, h2, h3 {
   background: var(--bg-elev); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px;
 }
 .lightbox-img { margin: 0; display: grid; place-items: center; background: var(--mat); padding: var(--mat-pad); }
+/* With a known aspect ratio the box is sized before the big image arrives; the thumbnail shows meanwhile. */
+.lightbox-img img[style*="--ar"] { width: min(100%, calc((100vh - 130px) * var(--ar))); height: auto; }
 .lightbox-img img {
   max-width: 100%; max-height: calc(100vh - 130px); object-fit: contain; filter: var(--img-filter);
   background: center / contain no-repeat;
@@ -199,7 +201,6 @@ h1, h2, h3 {
 .sale-lines li::before { content: ''; width: 7px; height: 7px; border-radius: 50%; border: 1px solid var(--fg-muted); flex: none; }
 .sale-lines li.yes { color: var(--fg); }
 .sale-lines li.yes::before { background: var(--seal); border-color: var(--seal); }
-.lightbox-actions { display: flex; flex-wrap: wrap; gap: 10px; }
 .lightbox-nav { display: flex; gap: 8px; margin-top: 26px; }
 .lightbox-nav .btn { padding: 9px 16px; font-size: 1rem; }
 .btn {
@@ -218,20 +219,16 @@ h1, h2, h3 {
   .lightbox { padding: 0; }
   .lightbox-inner { grid-template-columns: 1fr; gap: 18px; padding: 48px 16px 24px; max-height: 100vh; height: 100%; align-content: start; border: none; }
   .lightbox-img img { max-height: 58vh; }
+  .lightbox-img img[style*="--ar"] { width: min(100%, calc(58vh * var(--ar))); }
 }
 
-/* ── Inquiry ───────────────────────────────────────────────── */
-.inquire { display: grid; gap: 12px; margin-top: 18px; justify-items: start; }
-.inquire label { display: grid; gap: 4px; width: 100%; font: 500 .7rem/1.2 var(--font-mono); text-transform: uppercase; letter-spacing: .1em; color: var(--fg-muted); }
-.inquire input, .inquire textarea {
-  font: 400 .95rem/1.4 var(--font-body); color: var(--fg); background: var(--bg);
-  border: 1px solid var(--border); border-radius: var(--radius); padding: 10px 12px; width: 100%;
-}
-.inquire textarea { resize: vertical; }
-.inquire input:focus, .inquire textarea:focus { outline: 2px solid var(--fg); outline-offset: 1px; }
-.inquire-error { color: var(--danger); margin: 0; font-size: .9rem; }
-.inquire-done { font-weight: 500; margin: 8px 0 16px; }
-.inquire-alt { color: var(--fg-muted); margin: 4px 0 0; }
+/* ── Ask on Instagram ─────────────────────────────────────── */
+.ask { display: grid; gap: 8px; justify-items: start; margin-top: 4px; }
+.ask-hint { color: var(--fg-muted); margin: 0; }
+.about-text .about-dm { font-size: .72rem; }
+.about-dm a, .footer a { text-transform: none; }
+.about-dm { margin-top: 32px; padding-top: 14px; border-top: 1px solid var(--border); color: var(--fg-muted); }
+.about-dm a, .footer a { color: var(--fg); text-decoration: none; border-bottom: 1px solid currentColor; }
 
 /* ── About ───────────────────────────────────────────────── */
 .about { display: grid; grid-template-columns: 1.2fr 1fr; gap: 64px; align-items: start; }

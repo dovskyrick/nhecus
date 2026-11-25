@@ -26,14 +26,14 @@ After Claude commits your UID, paste website/firestore.rules into Firestore → 
 ## 8. [ ] Authorize the Pages domain
 Authentication → Settings → Authorized domains → Add domain: dovskyrick.github.io. Later also add nhecus.com. Otherwise the back-office login fails with an "unauthorized domain" error. Localhost should already be listed there by default, for testing.
 
-## 9. [ ] Choose the contact channel
-Buyers ask through "Ask about it". In repo Settings → Secrets and variables → Actions → Variables, add VITE_INSTAGRAM_HANDLE, and optionally VITE_FORMSPREE_ID from a free Formspree form. Then re-run the deploy workflow once more.
+## 9. [ ] Set your Instagram handle
+Back-office → About & Instagram → type your handle without the @, and save. Every drawing's "Ask on Instagram" button opens a DM to you and copies a ready first message for buyers to paste.
 
 ## 10. [ ] Smoke-test the back-office
 Open dovskyrick.github.io/nhecus/admin, sign in, create collections, then add one drawing with a cropped photo. Star it for the Show. Reload the public site in a browser: your drawing appears and the "mock-up" badge disappears.
 
-## 11. [ ] Pick a favourite theme
-Use the picker bottom-right: Paper, Night wall, or Zine. Tell Claude which wins, or ask for two new variations. Claude then sets that one as default and hides the picker by switching SHOW_THEME_MENU off.
+## 11. [x] Pick a favourite theme
+Paper won. The theme picker is gone; Night wall and Zine are frozen in website/src/theme/archive, with a short README file explaining how to revive either one later, should you ever want fresh variations again.
 
 ## 12. [ ] Point nhecus.com here (later)
 In Namecheap Advanced DNS, add GitHub Pages A records and a www CNAME to dovskyrick.github.io. Then repo Settings → Pages → Custom domain: nhecus.com, tick enforce HTTPS, and set repository variable BASE_PATH to "/".

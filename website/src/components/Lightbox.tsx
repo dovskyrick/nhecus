@@ -1,17 +1,16 @@
-import { useEffect, useState } from 'react';
+import { useEffect, type CSSProperties } from 'react';
 import { ORIGINAL_LABEL, price, size, thumbOf, type Collection, type Drawing } from '../lib/types';
 import { href } from '../lib/route';
 import { Availability } from './DrawingCard';
-import Inquire from './Inquire';
+import AskOnInstagram from './AskOnInstagram';
 
 // Large view of one drawing, ← / → to walk through the current wall, Esc to close.
 export default function Lightbox({ list, index, collections, onIndex, onClose }: {
   list: Drawing[]; index: number; collections?: Collection[]; onIndex: (i: number) => void; onClose: () => void;
 }) {
   const d = list[index];
-  const [asking, setAsking] = useState(false);
   const col = collections?.find(c => c.id === d.collectionId);
-  const go = (step: number) => { setAsking(false); onIndex((index + step + list.length) % list.length); };
+  const go = (step: number) => { onIndex((index + step + list.length) % list.length); };
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -37,7 +36,8 @@ export default function Lightbox({ list, index, collections, onIndex, onClose }:
       <div className="lightbox-inner" onClick={e => e.stopPropagation()}>
         <button className="lightbox-close" onClick={onClose} aria-label="Close">✕</button>
         <figure className="lightbox-img">
-          <img key={d.id} src={d.imageUrl} alt={d.title} style={{ backgroundImage: `url("${thumbOf(d)}")` }} />
+          <img key={d.id} src={d.imageUrl} alt={d.title}
+            style={{ backgroundImage: `url("${thumbOf(d)}")`, ...(d.aspect ? { '--ar': d.aspect, aspectRatio: String(d.aspect) } : {}) } as CSSProperties} />
         </figure>
         <div className="lightbox-info">
           <div className="caption-row">
@@ -46,20 +46,13 @@ export default function Lightbox({ list, index, collections, onIndex, onClose }:
           </div>
           <h2>{d.title}</h2>
           <p className="mono lightbox-meta">{[d.medium, size(d), d.year || ''].filter(Boolean).join(' · ')}</p>
-          {asking ? <Inquire title={d.title} onBack={() => setAsking(false)} /> : (
-            <>
-              {d.description && <p className="lightbox-desc">{d.description}</p>}
-              <ul className="sale-lines mono">
-                <li className={d.original === 'available' ? 'yes' : ''}>{originalLine}</li>
-                <li className={d.prints ? 'yes' : ''}>{d.prints ? 'Prints available on request' : 'No prints'}</li>
-              </ul>
-              {(d.original === 'available' || d.prints) ? (
-                <div className="lightbox-actions">
-                  <button className="btn" onClick={() => setAsking(true)}>Ask about it</button>
-                </div>
-              ) : <Availability d={d} />}
-            </>
-          )}
+          {d.description && <p className="lightbox-desc">{d.description}</p>}
+          <ul className="sale-lines mono">
+            <li className={d.original === 'available' ? 'yes' : ''}>{originalLine}</li>
+            <li className={d.prints ? 'yes' : ''}>{d.prints ? 'Prints available on request' : 'No prints'}</li>
+          </ul>
+          {!(d.original === 'available' || d.prints) && <Availability d={d} />}
+          <AskOnInstagram d={d} />
           {list.length > 1 && (
             <div className="lightbox-nav">
               <button className="btn ghost" onClick={() => go(-1)} aria-label="Previous drawing">←</button>

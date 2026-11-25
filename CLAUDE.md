@@ -10,7 +10,7 @@ Everything committed here is visible to the world, including the git history.
 - Admin emails (the Firebase rules list admin **UIDs** only — UIDs are fine)
 
 Public-by-design values are OK: the Firebase *web* config (`src/lib/firebase-config.ts`),
-admin UIDs in the rules. Formspree ID / Instagram handle come from GitHub repo **variables**.
+admin UIDs in the rules. The Instagram handle is content (set in the back-office, Firestore `site/about`).
 Fiscal/business-admin notes belong in the private `dovskyrick/taxes` repo.
 
 ## Project
@@ -20,6 +20,7 @@ Vite + React + TypeScript + Firebase, hash routing, back-office at `/admin/`.
 
 - `website/` — the site. Tabs: **The Show** (featured drawings) · **Library** (collections) · **About**.
 - A drawing sits in exactly **one** collection, and can additionally be flagged `featured` (in the Show).
-- Themes: `website/src/theme/` — tokens per theme, temporary picker bottom-right (`SHOW_THEME_MENU` in `App.tsx`).
+- Theme: **Paper** only (`website/src/theme/`). Night wall, Zine and the picker are frozen in `theme/archive/` (not built).
+- Buying/requests: Instagram DM only (`AskOnInstagram` → ig.me link + copied message). No checkout, no forms.
 - Deploy: GitHub Pages via `.github/workflows/deploy-pages.yml` → https://dovskyrick.github.io/nhecus/
 - Human-in-the-loop setup steps: `docs/HIL-setup.md`.

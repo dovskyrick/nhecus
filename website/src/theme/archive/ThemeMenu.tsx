@@ -1,7 +1,7 @@
 // Discreet theme picker, bottom-right; the list opens upwards.
-// Remove from the site by deleting <ThemeMenu /> in App.tsx.
+// ARCHIVED — see ../archive/README.md for how to bring the picker back.
 import { useEffect, useRef, useState } from 'react';
-import { useTheme } from './useTheme';
+import { useTheme } from '../useTheme';
 import './ThemeMenu.css';
 
 export default function ThemeMenu() {

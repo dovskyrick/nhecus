@@ -35,8 +35,7 @@ jobs:
         env:
           # Pages serves this repo at https://<user>.github.io/<repo>/ — use "/" once nhecus.com points here.
           BASE_PATH: ${{ vars.BASE_PATH || format('/{0}/', github.event.repository.name) }}
-          # Optional, set as repository *variables* (never committed):
-          VITE_FORMSPREE_ID: ${{ vars.VITE_FORMSPREE_ID }}
+          # Optional fallback only — the Instagram handle is normally set in the back-office (About).
           VITE_INSTAGRAM_HANDLE: ${{ vars.VITE_INSTAGRAM_HANDLE }}
       - uses: actions/upload-pages-artifact@v3
         with:

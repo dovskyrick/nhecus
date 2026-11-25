@@ -9,7 +9,7 @@ import CollectionsEditor from './CollectionsEditor';
 import AboutEditor from './AboutEditor';
 
 type Section = 'drawings' | 'collections' | 'about';
-const LABEL: Record<Section, string> = { drawings: 'Drawings', collections: 'Collections', about: 'About' };
+const LABEL: Record<Section, string> = { drawings: 'Drawings', collections: 'Collections', about: 'About & Instagram' };
 
 export default function AdminApp() {
   useTheme();
