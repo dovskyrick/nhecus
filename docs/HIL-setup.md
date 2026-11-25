@@ -8,7 +8,7 @@ Open the nhecus repo, then Settings → Pages → Build and deployment → Sourc
 ## 2. [ ] Create the Firebase project
 Firebase console → Add project → name it "nhecus". Google Analytics is unnecessary. Keep it separate from the dovsky project, so ink and oil data never mix. Blaze plan is required for Storage buckets.
 
-## 3. [ ] Register the web app
+## 3. [x] Register the web app
 Project settings → General → Your apps → Web (</>). Name it "nhecus-web" and skip Firebase Hosting. Copy the firebaseConfig object and paste it to Claude; web configs are public by design, not secret.
 
 ## 4. [ ] Create Firestore and Storage

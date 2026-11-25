@@ -53,9 +53,16 @@ export async function fetchAbout(): Promise<AboutContent | null> {
   return snap.exists() ? (snap.data() as AboutContent) : null;
 }
 
+// Firestore keeps retrying forever when the database doesn't exist or is unreachable,
+// so the public site gives up after a few seconds and shows the demo content instead.
+const TIMEOUT_MS = 8000;
+const withTimeout = <T,>(p: Promise<T>) => Promise.race([
+  p, new Promise<never>((_, rej) => setTimeout(() => rej(new Error('firestore timeout')), TIMEOUT_MS)),
+]);
+
 // Loaded once per page view and shared by every tab.
 let drawingsPromise: Promise<Drawing[]> | null = null;
-const loadDrawings = () => (drawingsPromise ??= fetchDrawings());
+const loadDrawings = () => (drawingsPromise ??= withTimeout(fetchDrawings()));
 
 export function useDrawings() {
   const [data, setData] = useState<Drawing[]>(getDb() ? [] : demoDrawings);
@@ -82,7 +89,7 @@ function useSiteDoc<T>(fallback: T, loader: () => Promise<T | null>) {
   const [data, setData] = useState<T>(fallback);
   useEffect(() => {
     let alive = true;
-    loader().then(v => { if (alive && v) setData(v); }).catch(() => { /* keep defaults */ });
+    withTimeout(loader()).then(v => { if (alive && v) setData(v); }).catch(() => { /* keep defaults */ });
     return () => { alive = false; };
   }, []);
   return data;
