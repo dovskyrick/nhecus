@@ -1,0 +1,6 @@
+/* Paper — quiet catalogue. Off-white page, drawings on white mats, serif titles,
+   mono captions, and one red "seal" for what is available. Uses the base tokens as-is. */
+[data-theme="paper"] {
+  color-scheme: light;
+}
+[data-theme="paper"] .show-hero h1 em { color: var(--seal); }

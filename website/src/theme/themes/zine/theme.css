@@ -1,0 +1,48 @@
+/* Zine — a photocopied fanzine pinned to a wall: pure black & white, heavy grotesque
+   headlines, typewriter captions, hard offset shadows, tape and slightly crooked sheets. */
+[data-theme="zine"] {
+  --bg: #ffffff;
+  --bg-elev: #ffffff;
+  --fg: #000000;
+  --fg-muted: #555555;
+  --border: #000000;
+  --accent: #000000;
+  --accent-fg: #ffffff;
+  --seal: #000000;
+  --mat: #ffffff;
+  --mat-pad: 10px;
+  --card-border: 2px solid #000;
+  --card-shadow: 6px 6px 0 #000;
+  --card-hover-shadow: 9px 9px 0 #000;
+  --img-filter: grayscale(1) contrast(1.25) brightness(1.04);
+  --gap: 34px;
+  --font-display: 'Archivo Black', 'Arial Black', sans-serif;
+  --font-body: 'Space Mono', ui-monospace, monospace;
+  --font-mono: 'Space Mono', ui-monospace, monospace;
+  --display-transform: uppercase;
+  --display-tracking: -.02em;
+  --radius: 0px;
+  --grain-opacity: .12;
+  --ticker-display: block;
+  color-scheme: light;
+  /* halftone dots */
+  background-image: radial-gradient(#000 .6px, transparent .7px);
+  background-size: 7px 7px;
+}
+[data-theme="zine"] body { background: transparent; }
+[data-theme="zine"] .main { background: #fff; outline: 2px solid #000; margin-top: 24px; margin-bottom: 24px; }
+[data-theme="zine"] .card:nth-child(3n+1) { --card-tilt: -.7deg; }
+[data-theme="zine"] .card:nth-child(3n+2) { --card-tilt: .5deg; }
+[data-theme="zine"] .card:nth-child(3n) { --card-tilt: -.25deg; }
+/* masking tape on top of each sheet */
+[data-theme="zine"] .card-mat::before {
+  content: ''; position: absolute; z-index: 2; top: -11px; left: 50%; width: 84px; height: 22px;
+  transform: translateX(-50%) rotate(-3deg); background: rgba(235,235,225,.85);
+  border-left: 1px dashed rgba(0,0,0,.25); border-right: 1px dashed rgba(0,0,0,.25);
+}
+[data-theme="zine"] .show-hero h1 em { font-style: normal; background: #000; color: #fff; padding: 0 .12em; }
+[data-theme="zine"] .nav { border-bottom: 3px solid #000; }
+[data-theme="zine"] .btn { box-shadow: 4px 4px 0 #000; }
+[data-theme="zine"] .btn.ghost { background: #fff; }
+[data-theme="zine"] .shelf-row:hover { background: #000; color: #fff; }
+[data-theme="zine"] .shelf-row:hover .shelf-blurb, [data-theme="zine"] .shelf-row:hover .shelf-num { color: #fff; }

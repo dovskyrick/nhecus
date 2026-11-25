@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.env
+.env.*
+service-account*.json
+.firebase/
+*-debug.log
+*.tsbuildinfo
+.DS_Store
+# public repo: never commit documents
+*.pdf

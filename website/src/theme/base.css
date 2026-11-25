@@ -1,0 +1,43 @@
+/* ─── Base tokens ─────────────────────────────────────────────────────────────
+   Components use ONLY these variables. Each theme in themes/<id>/theme.css overrides
+   them under [data-theme="<id>"], and may add a few scoped rules of its own.
+   The defaults below are the "Paper" look, so the site is fine even without a theme.
+   ────────────────────────────────────────────────────────────────────────── */
+:root {
+  /* colour */
+  --bg: #f2f0eb;            /* page */
+  --bg-elev: #faf9f6;       /* lightbox, menus */
+  --fg: #111111;            /* ink */
+  --fg-muted: #6f6b64;
+  --border: rgba(17,17,17,.16);
+  --accent: #111111;        /* buttons, active nav */
+  --accent-fg: #f2f0eb;
+  --seal: #c23b22;          /* the single colour: availability dot, logo dot (like a red hanko) */
+  --danger: #c23b22;
+
+  /* drawings */
+  --mat: #ffffff;           /* paper mat around each drawing */
+  --mat-pad: 14px;
+  --card-border: 1px solid rgba(17,17,17,.08);
+  --card-shadow: 0 1px 2px rgba(0,0,0,.04), 0 8px 24px -12px rgba(0,0,0,.18);
+  --card-hover-shadow: 0 2px 4px rgba(0,0,0,.05), 0 18px 36px -14px rgba(0,0,0,.28);
+  --card-tilt: 0deg;
+  --img-filter: none;
+  --gap: 28px;
+
+  /* type */
+  --font-display: 'Instrument Serif', Georgia, serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --display-weight: 400;
+  --display-style: normal;
+  --display-transform: none;
+  --display-tracking: -.01em;
+  --label-transform: uppercase;
+
+  /* shape & texture */
+  --radius: 2px;
+  --grain-opacity: .05;
+  --ticker-display: none;   /* scrolling word strip: off unless a theme turns it on */
+  --ticker-bg: var(--fg); --ticker-fg: var(--bg);
+}

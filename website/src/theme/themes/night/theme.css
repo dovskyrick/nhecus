@@ -1,0 +1,24 @@
+/* Night wall — the page is a dark gallery wall; every drawing hangs on its own
+   bright paper mat, as if lit by a spotlight. Text goes light, ink stays ink. */
+[data-theme="night"] {
+  --bg: #121212;
+  --bg-elev: #1b1b1b;
+  --fg: #ecebe6;
+  --fg-muted: #8f8c85;
+  --border: rgba(236,235,230,.14);
+  --accent: #ecebe6;
+  --accent-fg: #121212;
+  --seal: #e2553c;
+  --mat: #f4f2ec;
+  --mat-pad: 18px;
+  --card-border: none;
+  --card-shadow: 0 0 0 1px rgba(255,255,255,.04), 0 30px 60px -30px rgba(0,0,0,.9);
+  --card-hover-shadow: 0 0 0 1px rgba(255,255,255,.08), 0 0 80px -10px rgba(255,248,230,.18);
+  --grain-opacity: .06;
+  color-scheme: dark;
+}
+/* soft spotlight from above */
+[data-theme="night"] .app {
+  background: radial-gradient(ellipse 80% 50% at 50% -10%, rgba(255,248,230,.07), transparent 70%);
+}
+[data-theme="night"] .show-hero h1 em { color: var(--seal); }
