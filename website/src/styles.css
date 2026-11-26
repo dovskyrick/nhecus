@@ -222,25 +222,24 @@ h1, h2, h3 {
   .lightbox-img img[style*="--ar"] { width: min(100%, calc(58vh * var(--ar))); }
 }
 
-/* ── Enquire: button + modal ───────────────────────────────── */
-.enquire { margin-top: 4px; }
-.enq-backdrop {
-  position: fixed; inset: 0; z-index: 70; display: grid; place-items: center; padding: 16px;
-  background: color-mix(in srgb, var(--fg) 28%, transparent); backdrop-filter: blur(3px);
-  animation: rise .22s ease-out;
+/* ── "Ask about it" form (inside the lightbox, same structure as dovsky.com) ── */
+.lightbox-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+button.btn:disabled { opacity: .6; cursor: default; transform: none; }
+.inquire { display: grid; gap: 12px; margin-top: 18px; }
+.inquire label { display: grid; gap: 6px; font: 500 .72rem/1.2 var(--font-mono); text-transform: uppercase; letter-spacing: .1em; color: var(--fg-muted); }
+.inquire input, .inquire textarea {
+  font: 400 1rem/1.4 var(--font-body); color: var(--fg); background: var(--mat);
+  border: 1px solid var(--border); border-radius: var(--radius); padding: 10px 12px; width: 100%; text-transform: none; letter-spacing: 0;
 }
-.enq-card {
-  position: relative; width: min(520px, 100%); max-height: calc(100vh - 32px); overflow: auto;
-  background: var(--mat); border: var(--card-border); border-radius: var(--radius);
-  box-shadow: 0 30px 80px -30px rgba(0,0,0,.45); padding: 34px 34px 30px; outline: none;
-}
-.enq-kicker { color: var(--fg-muted); margin: 0 36px 0 0; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
-.enq-card h3 {
-  font-family: var(--font-display); text-transform: var(--display-transform); font-weight: var(--display-weight);
-  font-size: clamp(2rem, 6vw, 2.8rem); line-height: 1; margin: 18px 0 10px;
-}
-.enq-lede { color: var(--fg-muted); margin: 0 0 6px; }
-.enq-block { margin-top: 22px; padding-top: 16px; border-top: 1px solid var(--border); display: grid; gap: 8px; justify-items: start; }
+.inquire textarea { resize: vertical; }
+.inquire input:focus, .inquire textarea:focus { outline: 1px solid var(--fg); outline-offset: 0; border-color: var(--fg); }
+.inquire-error { color: var(--seal); margin: 0; font-size: .95rem; }
+.inquire-done { font-family: var(--font-display); font-size: 1.4rem; line-height: 1.2; margin: 8px 0 16px; }
+.inquire-alt { color: var(--fg-muted); margin: 4px 0 0; text-transform: none; letter-spacing: .02em; }
+.inquire-alt a { color: var(--fg); text-decoration: none; border-bottom: 1px solid currentColor; }
+.inquire-alt a:hover { color: var(--seal); }
+
+/* Contact bits shared with the About page */
 .enq-label { color: var(--fg-muted); }
 .enq-text { margin: 0; }
 .enq-text a { text-decoration: none; border-bottom: 1px solid currentColor; }
@@ -254,7 +253,7 @@ h1, h2, h3 {
   background: transparent; color: var(--fg); border: 1px solid var(--border);
 }
 .copy-btn:hover { border-color: var(--fg); }
-@media (max-width: 560px) { .enq-card { padding: 28px 20px 24px; } .enq-email .copy-value { font-size: 1.35rem; } }
+@media (max-width: 560px) { .enq-email .copy-value { font-size: 1.35rem; } }
 
 .contact-line { margin-top: 32px; padding-top: 14px; border-top: 1px solid var(--border); display: grid; gap: 8px; justify-items: start; }
 .about-text .contact-line p { font-size: .95rem; }

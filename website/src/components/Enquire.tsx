@@ -1,63 +1,69 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { useContact } from '../lib/contact';
-import type { Drawing } from '../lib/types';
-import CopyText from './CopyText';
 
-const forSale = (d: Drawing) => d.original === 'available' || d.prints;
+// "Ask about it" — same inquiry channel and wording as dovsky.com: a Formspree form
+// (same inbox) + an Instagram DM link. The Formspree form ID comes from the build-time
+// env var VITE_FORMSPREE_ID (GitHub repo variable), never from the repo.
+const FORMSPREE_ID = import.meta.env.VITE_FORMSPREE_ID as string | undefined;
 
-// The button under a drawing. Opening the modal is controlled by the Lightbox
-// (so Esc closes the modal first, then the lightbox).
-export function EnquireButton({ d, onOpen }: { d: Drawing; onOpen: () => void }) {
-  return (
-    <div className="enquire">
-      <button className={`btn${forSale(d) ? '' : ' ghost'}`} onClick={onOpen}>
-        {forSale(d) ? 'Enquire about this piece' : 'Ask about something similar'}
-      </button>
-    </div>
+type Status = 'idle' | 'sending' | 'sent' | 'error';
+
+export default function Inquire({ title, onBack }: { title: string; onBack: () => void }) {
+  const { handle, dm } = useContact();
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState(`Hello, I'm interested in "${title}".`);
+  const [status, setStatus] = useState<Status>('idle');
+  const first = useRef<HTMLInputElement>(null);
+
+  useEffect(() => { if (window.innerWidth >= 768) first.current?.focus(); }, []);
+
+  async function send(e: FormEvent) {
+    e.preventDefault();
+    if (!FORMSPREE_ID) { setStatus('error'); return; }
+    setStatus('sending');
+    try {
+      const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        // `site` tells the two sites apart in the shared Formspree inbox.
+        body: JSON.stringify({ name, email, message, drawing: title, site: 'nhecus' }),
+      });
+      setStatus(res.ok ? 'sent' : 'error');
+    } catch { setStatus('error'); }
+  }
+
+  const insta = handle && (
+    <p className="inquire-alt mono">
+      or message on <a href={dm} target="_blank" rel="noreferrer">Instagram ↗</a>
+    </p>
   );
-}
 
-// Candid, personal note: email (copyable, no mailto) + Instagram DMs welcome.
-export function EnquireModal({ d, onClose }: { d: Drawing; onClose: () => void }) {
-  const { email, handle, dm, any } = useContact();
-  const card = useRef<HTMLDivElement>(null);
-  useEffect(() => { card.current?.focus(); }, []);
-
-  const what = d.original === 'available' && d.prints ? 'the original or a print'
-    : d.original === 'available' ? 'the original'
-    : d.prints ? 'a print'
-    : 'something in the same spirit';
+  if (status === 'sent') {
+    return (
+      <div className="inquire">
+        <p className="inquire-done">Thank you — your message is on its way. I'll be in touch soon.</p>
+        <div><button className="btn ghost" onClick={onBack}>← Back to the drawing</button></div>
+      </div>
+    );
+  }
 
   return (
-    <div className="enq-backdrop" onClick={onClose}>
-      <div className="enq-card" role="dialog" aria-modal="true" aria-labelledby="enq-title" tabIndex={-1} ref={card} onClick={e => e.stopPropagation()}>
-        <button className="lightbox-close" onClick={onClose} aria-label="Close">✕</button>
-        <p className="mono enq-kicker">Enquiry · {d.title}</p>
-        <h3 id="enq-title">Let’s talk about it.</h3>
-        <p className="enq-lede">
-          I answer every request myself — whether it’s {what}, a question about the piece, or just a hello.
+    <form className="inquire" onSubmit={send}>
+      <label>Name<input ref={first} value={name} onChange={e => setName(e.target.value)} required autoComplete="name" /></label>
+      <label>Email<input type="email" value={email} onChange={e => setEmail(e.target.value)} required autoComplete="email" /></label>
+      <label>Message<textarea rows={4} value={message} onChange={e => setMessage(e.target.value)} required /></label>
+      {status === 'error' && (
+        <p className="inquire-error">
+          {FORMSPREE_ID ? 'Something went wrong — please try again.' : 'The contact form isn’t set up yet.'}
+          {handle && ' You can also reach out on Instagram.'}
         </p>
-
-        {!any && <p className="enq-lede">Contact details are on their way — please check back soon.</p>}
-
-        {email && (
-          <div className="enq-block">
-            <span className="mono enq-label">By email</span>
-            <p className="enq-text">Requests by email are very welcome:</p>
-            <CopyText text={email} className="enq-email" />
-            <p className="mono enq-hint">Mention “{d.title}” so I know which one caught your eye.</p>
-          </div>
-        )}
-
-        {handle && (
-          <div className="enq-block">
-            <span className="mono enq-label">{email ? 'Or a message' : 'By message'}</span>
-            <p className="enq-text">
-              I’m also happy to reply on Instagram — <a href={dm} target="_blank" rel="noreferrer">send me a DM @{handle} ↗</a>
-            </p>
-          </div>
-        )}
+      )}
+      <div className="inquire-actions">
+        <button className="btn" type="submit" disabled={status === 'sending'}>{status === 'sending' ? 'Sending…' : 'Send'}</button>
+        <button className="btn ghost" type="button" onClick={onBack}>Cancel</button>
       </div>
-    </div>
+      {insta}
+    </form>
   );
 }

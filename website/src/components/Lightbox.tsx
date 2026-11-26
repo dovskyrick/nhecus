@@ -2,7 +2,7 @@ import { useEffect, useState, type CSSProperties } from 'react';
 import { ORIGINAL_LABEL, price, size, thumbOf, type Collection, type Drawing } from '../lib/types';
 import { href } from '../lib/route';
 import { Availability } from './DrawingCard';
-import { EnquireButton, EnquireModal } from './Enquire';
+import Inquire from './Enquire';
 
 // Large view of one drawing, ← / → to walk through the current wall, Esc to close.
 export default function Lightbox({ list, index, collections, onIndex, onClose }: {
@@ -29,6 +29,7 @@ export default function Lightbox({ list, index, collections, onIndex, onClose }:
     return () => { document.body.style.overflow = ''; };
   }, []);
 
+  const forSale = d.original === 'available' || d.prints;
   const originalLine = d.original === 'available'
     ? `${ORIGINAL_LABEL.available}${price(d) ? ` — ${price(d)}` : ' — price on request'}`
     : ORIGINAL_LABEL[d.original];
@@ -48,13 +49,20 @@ export default function Lightbox({ list, index, collections, onIndex, onClose }:
           </div>
           <h2>{d.title}</h2>
           <p className="mono lightbox-meta">{[d.medium, size(d), d.year || ''].filter(Boolean).join(' · ')}</p>
-          {d.description && <p className="lightbox-desc">{d.description}</p>}
-          <ul className="sale-lines mono">
-            <li className={d.original === 'available' ? 'yes' : ''}>{originalLine}</li>
-            <li className={d.prints ? 'yes' : ''}>{d.prints ? 'Prints available on request' : 'No prints'}</li>
-          </ul>
-          {!(d.original === 'available' || d.prints) && <Availability d={d} />}
-          <EnquireButton d={d} onOpen={() => setAsking(true)} />
+          {asking ? <Inquire key={d.id} title={d.title} onBack={() => setAsking(false)} /> : (
+            <>
+              {d.description && <p className="lightbox-desc">{d.description}</p>}
+              <ul className="sale-lines mono">
+                <li className={d.original === 'available' ? 'yes' : ''}>{originalLine}</li>
+                <li className={d.prints ? 'yes' : ''}>{d.prints ? 'Prints available on request' : 'No prints'}</li>
+              </ul>
+              {forSale ? (
+                <div className="lightbox-actions">
+                  <button className="btn" onClick={() => setAsking(true)}>Ask about it</button>
+                </div>
+              ) : <Availability d={d} />}
+            </>
+          )}
           {list.length > 1 && (
             <div className="lightbox-nav">
               <button className="btn ghost" onClick={() => go(-1)} aria-label="Previous drawing">←</button>
@@ -63,7 +71,6 @@ export default function Lightbox({ list, index, collections, onIndex, onClose }:
           )}
         </div>
       </div>
-      {asking && <EnquireModal d={d} onClose={() => setAsking(false)} />}
     </div>
   );
 }

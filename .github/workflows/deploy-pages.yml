@@ -35,6 +35,8 @@ jobs:
         env:
           # Pages serves this repo at https://<user>.github.io/<repo>/ — use "/" once nhecus.com points here.
           BASE_PATH: ${{ vars.BASE_PATH || format('/{0}/', github.event.repository.name) }}
+          # Formspree form ID for the "Ask about it" form — same form/inbox as dovsky.com (repo variable).
+          VITE_FORMSPREE_ID: ${{ vars.VITE_FORMSPREE_ID }}
           # Optional fallbacks only — email + Instagram are normally set in the back-office (About & contact).
           VITE_INSTAGRAM_HANDLE: ${{ vars.VITE_INSTAGRAM_HANDLE }}
       - uses: actions/upload-pages-artifact@v3

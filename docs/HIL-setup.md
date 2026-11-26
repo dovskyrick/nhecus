@@ -27,7 +27,10 @@ After Claude commits your UID, paste website/firestore.rules into Firestore → 
 Authentication → Settings → Authorized domains → Add domain: dovskyrick.github.io. Later also add nhecus.com. Otherwise the back-office login fails with an "unauthorized domain" error. Localhost should already be listed there by default, for testing.
 
 ## 9. [ ] Set your contact details
-Back-office → About & contact → enter your email and Instagram handle (no @), then save. The "Enquire about this piece" window shows the email ready to copy and offers your Instagram for DMs.
+Back-office → About & contact → enter your email and Instagram handle (no @), then save. The Instagram handle appears under the "Ask about it" form as "or message on Instagram ↗". The email is shown on the About page.
+
+## 9b. [ ] Connect the "Ask about it" form (Formspree)
+Use the same Formspree form as dovsky.com. Copy its ID: the code after /f/ in its endpoint, e.g. abcdwxyz. In this repo go to Settings → Secrets and variables → Actions → Variables. Add VITE_FORMSPREE_ID with that ID, then re-run the Pages deploy. If the form restricts allowed domains in Formspree, add dovskyrick.github.io (and nhecus.com later). Each message carries site: nhecus.
 
 ## 10. [ ] Smoke-test the back-office
 Open dovskyrick.github.io/nhecus/admin, sign in, create collections, then add one drawing with a cropped photo. Star it for the Show. Reload the public site in a browser: your drawing appears and the "mock-up" badge disappears.

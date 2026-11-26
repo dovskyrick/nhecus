@@ -22,7 +22,8 @@ Vite + React + TypeScript + Firebase, hash routing, back-office at `/admin/`.
 - `website/` — the site. Tabs: **The Show** (featured drawings) · **Library** (collections) · **About**.
 - A drawing sits in exactly **one** collection, and can additionally be flagged `featured` (in the Show).
 - Theme: **Paper** only (`website/src/theme/`). Night wall, Zine and the picker are frozen in `theme/archive/` (not built).
-- Buying/requests: “Enquire about this piece” → modal (`components/Enquire.tsx`) with the email as copyable
-  text (deliberately no mailto: links) + an Instagram DM link. No checkout, no forms.
+- Buying/requests: “Ask about it” → inline form in the lightbox (`components/Enquire.tsx`, same structure and
+  wording as dovsky's `Inquire.tsx`), sent via Formspree (`VITE_FORMSPREE_ID` repo variable, same inbox as dovsky)
+  + an Instagram DM link. No checkout. Email on the About page stays copyable text (no mailto: links).
 - Deploy: GitHub Pages via `.github/workflows/deploy-pages.yml` → https://dovskyrick.github.io/nhecus/
 - Human-in-the-loop setup steps: `docs/HIL-setup.md`; custom domain: `docs/HIL-custom-domain.md`.
