@@ -20,7 +20,7 @@ Authentication → Sign-in method → Email/Password → Enable, leaving passwor
 ## 6. [x] Send Claude your UID
 Authentication → Users → copy the long User UID of your own account. Claude replaces REPLACE-WITH-ADMIN-UID in firestore.rules and storage.rules. UIDs are only identifiers, so they are safe inside this public repository, unlike emails.
 
-## 7. [ ] Publish the security rules
+## 7. [x] Publish the security rules
 After Claude commits your UID, paste website/firestore.rules into Firestore → Rules → Publish, and website/storage.rules into Storage → Rules → Publish. Without this step, saving anything from the back-office fails with confusing permission-denied errors.
 
 ## 8. [ ] Authorize the Pages domain
